@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>خريطة مواد حاسبات الزقازيق</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Readex+Pro:wght@500;600&display=swap">
+<style>
+/* Layout: four level bands stacked top to bottom, each split into two term columns (first term on the right).
+   A detail panel sits beside them and shows what comes before and after the picked course. */
+:root{
+  --bg:#f2f5f8; --surface:#ffffff; --surface-2:#e8edf2; --fg:#14212e; --muted:#566676; --line:#d3dbe3;
+  --ink:#14212e; --on-ink:#ffffff;
+  --up:#c2410c; --up-bg:#fdeee6; --down:#0f766e; --down-bg:#e0f3f0; --ok:#2e7d32;
+  --t-CS:#2f5fc4; --t-IS:#a16207; --t-GI:#4d7c0f; --t-IT:#7e3fb5; --t-DS:#be185d;
+  --f-head:'Readex Pro','IBM Plex Sans Arabic',system-ui,sans-serif;
+  --f-body:'IBM Plex Sans Arabic',system-ui,'Segoe UI',Tahoma,sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e151c; --surface:#16202a; --surface-2:#1e2a36; --fg:#e6edf3; --muted:#93a4b5; --line:#2b3947;
+    --ink:#e6edf3; --on-ink:#0e151c;
+    --up:#fb923c; --up-bg:#3a2415; --down:#2dd4bf; --down-bg:#0f2e2b; --ok:#66bb6a;
+    --t-CS:#7aa2f7; --t-IS:#e0b04a; --t-GI:#9ccc65; --t-IT:#c39af0; --t-DS:#f472b6;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e151c; --surface:#16202a; --surface-2:#1e2a36; --fg:#e6edf3; --muted:#93a4b5; --line:#2b3947;
+  --ink:#e6edf3; --on-ink:#0e151c;
+  --up:#fb923c; --up-bg:#3a2415; --down:#2dd4bf; --down-bg:#0f2e2b; --ok:#66bb6a;
+  --t-CS:#7aa2f7; --t-IS:#e0b04a; --t-GI:#9ccc65; --t-IT:#c39af0; --t-DS:#f472b6;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:400 15px/1.6 var(--f-body);
+  padding-block:28px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+@media (max-width:999px){body.sheet-open{padding-bottom:calc(60vh + 24px)}}
+button{font:inherit;color:inherit;cursor:pointer}
+.wrap{max-width:1280px;margin:0 auto;min-width:0}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+/* header */
+.head{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:baseline;justify-content:space-between;margin-bottom:6px}
+h1{font:600 28px/1.25 var(--f-head);margin:0;text-wrap:balance}
+.facts{display:flex;flex-wrap:wrap;gap:4px 16px;color:var(--muted);font-size:13px;margin:0;padding:0;list-style:none}
+.facts b{color:var(--fg);font-weight:600;font-variant-numeric:tabular-nums}
+.by{display:flex;width:fit-content;max-width:100%;flex-wrap:wrap;gap:6px 12px;align-items:center;margin:0 0 12px;font-size:13.5px;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:6px 8px 6px 14px}
+.by{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.pill{display:inline-block;text-decoration:none;color:var(--on-ink);background:var(--ink);border-radius:8px;padding:3px 13px;font:600 12.5px var(--f-body)}
+.pill:hover{opacity:.85}
+.sub{color:var(--muted);font-size:14px;margin:0 0 18px;max-width:75ch}
+
+/* toolbar */
+.disc{font-size:13px;color:var(--muted);background:var(--surface-2);border-radius:8px;padding:8px 12px;margin:0 0 16px;max-width:75ch}
+.poolnote{font-size:13px;color:var(--muted);margin:8px 0 0;max-width:70ch}
+.bar{display:flex;flex-direction:column;gap:12px;margin-bottom:14px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.search{flex:1 1 220px;min-width:0;max-width:360px;background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font:inherit}
+.search::placeholder{color:var(--muted)}
+.chip{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:13.5px;line-height:1.4;white-space:nowrap}
+.chip:hover{border-color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--on-ink);border-color:var(--ink)}
+.chip .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-inline-end:6px;background:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.toggle{display:inline-flex;gap:8px;align-items:center;font-size:13.5px;cursor:pointer;user-select:none}
+.toggle input{width:16px;height:16px;accent-color:var(--ink)}
+
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;font-size:12.5px;color:var(--muted);padding:10px 0 4px;border-top:1px solid var(--line)}
+.legend .k{display:inline-flex;gap:6px;align-items:center}
+.sw{width:14px;height:14px;border-radius:4px;border:2px solid var(--line);background:var(--surface)}
+.sw.sel{border-color:var(--ink)}.sw.up{border-color:var(--up);background:var(--up-bg)}.sw.down{border-color:var(--down);background:var(--down-bg)}
+.sw.ok{border-color:var(--ok);background:var(--ok)}
+.legend .prog{margin-inline-start:auto;color:var(--fg);font-variant-numeric:tabular-nums}
+
+/* layout */
+.layout{display:grid;grid-template-columns:minmax(0,1fr);gap:24px;align-items:start}
+@media (min-width:1000px){.layout{grid-template-columns:minmax(0,1fr) 370px}}
+.levels{display:flex;flex-direction:column;gap:28px;min-width:0}
+.level{min-width:0}
+.lvhead{display:flex;flex-wrap:wrap;gap:2px 14px;align-items:baseline;margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid var(--ink)}
+.lvhead h2{font:600 20px/1.3 var(--f-head);margin:0}
+.lvhead p{margin:0;color:var(--muted);font-size:13px}
+.terms{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+@media (min-width:720px){.terms{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+.term{min-width:0;background:var(--surface-2);border-radius:12px;padding:12px}
+.term h3{font:500 14px/1.4 var(--f-head);margin:0 0 10px;display:flex;justify-content:space-between;gap:8px;color:var(--muted)}
+.term h3 b{color:var(--fg);font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:8px}
+.empty{color:var(--muted);font-size:13px;margin:4px 2px}
+details.pool{margin-top:12px;background:var(--surface-2);border-radius:12px;padding:10px 12px}
+details.pool summary{cursor:pointer;font:500 14px var(--f-head);color:var(--muted);padding:4px 0}
+details.pool summary b{color:var(--fg)}
+details.pool .grid{margin-top:10px}
+
+/* course card */
+.card{position:relative;display:flex;min-width:0}
+.pick{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px;text-align:start;background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:9px 11px 10px}
+.pick:hover{border-color:var(--muted)}
+.top{display:flex;gap:8px;align-items:baseline;padding-inline-end:26px}
+.code{font:500 12px var(--f-mono);direction:ltr;letter-spacing:.02em}
+.cr{font-size:11.5px;color:var(--muted)}
+.ar{font-weight:600;font-size:14px;line-height:1.45;text-wrap:balance}
+.en{font-size:11.5px;color:var(--muted);direction:ltr;text-align:right;line-height:1.35}
+.meta{display:flex;flex-wrap:wrap;gap:4px 6px;margin-top:auto;padding-top:3px;align-items:center}
+.pre{display:flex;flex-wrap:wrap;gap:3px 5px;align-items:center;font-size:11px;color:var(--muted)}
+.pre code{font:400 11px var(--f-mono);direction:ltr;background:var(--surface-2);border-radius:4px;padding:0 4px}
+.tag{font-size:11px;border-radius:999px;padding:0 8px;line-height:1.7;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.tag.t{border-color:currentColor;font-family:var(--f-mono);font-size:10.5px}
+.tag.m{background:currentColor}.tag.m span{color:var(--surface)}
+.tag.CS{color:var(--t-CS)}.tag.IS{color:var(--t-IS)}.tag.GI{color:var(--t-GI)}.tag.IT{color:var(--t-IT)}.tag.DS{color:var(--t-DS)}
+.tag.kind{color:var(--fg)}
+.opens{font-size:11px;color:var(--down)}
+.tick{position:absolute;top:7px;inset-inline-end:7px;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line);background:var(--surface);display:grid;place-items:center;font-size:12px;line-height:1;padding:0;color:transparent}
+.tick:hover{border-color:var(--ok)}
+.card.done .tick{background:var(--ok);border-color:var(--ok);color:#fff}
+.card.done .pick{background:var(--surface-2)}
+.card.done .ar{color:var(--muted)}
+.card.sel .pick{border-color:var(--ink);box-shadow:0 0 0 2px var(--ink)}
+.card.up .pick{border-color:var(--up);background:var(--up-bg)}
+.card.down .pick{border-color:var(--down);background:var(--down-bg)}
+.has-sel .card:not(.sel):not(.up):not(.down){opacity:.38}
+
+/* detail panel */
+.aside{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;min-width:0}
+@media (min-width:1000px){.aside{position:sticky;top:calc(16px + env(safe-area-inset-top,0px));max-height:calc(100vh - 32px);overflow:auto}}
+@media (max-width:999px){
+  .aside{position:fixed;left:0;right:0;bottom:0;z-index:20;max-height:60vh;overflow:auto;border-radius:16px 16px 0 0;
+    padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+    padding-bottom:calc(18px + env(safe-area-inset-bottom,0px));box-shadow:0 -8px 30px rgba(0,0,0,.18)}
+  .aside.empty{display:none}
+}
+.aside h2{font:600 19px/1.4 var(--f-head);margin:0 0 2px;text-wrap:balance}
+.aside .eng{direction:ltr;text-align:right;color:var(--muted);font-size:13px;margin:0 0 10px}
+.aside .close{position:absolute;top:10px;inset-inline-end:10px;border:1px solid var(--line);background:var(--surface);border-radius:8px;width:30px;height:30px}
+.facts2{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px;padding:0;list-style:none}
+.facts2 li{font-size:12.5px;background:var(--surface-2);border-radius:6px;padding:2px 9px}
+.facts2 .code{font-size:12.5px}
+.state{font-size:13.5px;border-radius:8px;padding:8px 11px;margin:0 0 12px;background:var(--surface-2)}
+.state.ready{background:var(--down-bg);color:var(--down)}
+.state.finished{background:var(--surface-2);color:var(--ok)}
+.state.miss{background:var(--up-bg);color:var(--up)}
+.bigbtn{display:block;width:100%;padding:9px 12px;border-radius:10px;border:1.5px solid var(--ink);background:var(--ink);color:var(--on-ink);font-weight:600;margin-bottom:16px}
+.bigbtn.off{background:var(--surface);color:var(--fg)}
+.sect{margin:0 0 16px}
+.sect h4{font:500 13px var(--f-head);color:var(--muted);margin:0 0 7px}
+.sect h4 b{color:var(--fg)}
+.rels{display:flex;flex-direction:column;gap:5px}
+.rel{display:flex;gap:8px;align-items:baseline;text-align:start;background:var(--surface);border:1.5px solid var(--line);border-radius:8px;padding:6px 10px;font-size:13.5px}
+.rel .code{flex:none}
+.rel.up{border-color:var(--up)}.rel.down{border-color:var(--down)}
+.rel .ck{margin-inline-start:auto;color:var(--ok);font-style:normal}
+.mini{display:flex;flex-wrap:wrap;gap:5px}
+.mini .rel{padding:3px 8px;font-size:12px}
+.note{font-size:12.5px;color:var(--muted);margin:0 0 14px}
+.none{font-size:13.5px;color:var(--muted);margin:0}
+.hint{color:var(--muted);font-size:14px;margin:0 0 16px}
+.ghost{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:6px 12px;font-size:13px}
+.ghost.warn{border-color:var(--up);color:var(--up)}
+.credit{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;max-width:80ch}
+.credit p{margin:0;font-size:14px;color:var(--fg)}
+.credit .who{font:600 15px var(--f-head)}
+.credit .role{color:var(--muted);font-size:13px}
+.credit .acts{display:flex;flex-wrap:wrap;gap:8px}
+.credit a,.credit button{display:inline-block;text-decoration:none;font-size:13.5px;border-radius:8px;padding:7px 14px;border:1.5px solid var(--ink);background:var(--ink);color:var(--on-ink);font-weight:600}
+.credit button{background:var(--surface);color:var(--fg);border-color:var(--line);font-weight:500}
+.foot{margin-top:32px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px;max-width:80ch}
+.foot p{margin:0 0 6px}
+@media (prefers-reduced-motion:no-preference){.pick,.chip,.card{transition:border-color .12s,background-color .12s,opacity .15s}}
+</style>
+<style>body{margin:0}</style>
+</head>
+<body>
+
+
+<div class="wrap" dir="rtl" lang="ar">
+  <header class="head">
+    <h1>خريطة مواد حاسبات الزقازيق</h1>
+    <ul class="facts">
+      <li><b>138</b> ساعة معتمدة للتخرج</li>
+      <li><b id="nCourses">171</b> مادة</li>
+      <li><b>5</b> تخصصات</li>
+    </ul>
+  </header>
+  <p class="by"><span>من عمل <b dir="ltr">Mostafa Mohamed</b>، طالب بالمستوى الثاني</span><a class="pill" href="https://www.linkedin.com/in/mostafa-mohamed-68056b433" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>
+  <p class="sub">كل مادة في ترمها، مع المتطلب السابق والمواد اللي بتفتحها. اضغط على أي مادة وهتشوف السلسلة كاملة، وعلّم اللي خلصته علشان تعرف تقدر تسجل إيه.</p>
+
+  <p class="disc">نسخة غير رسمية عملها طالب من اللائحة الداخلية 2019 وجداول الامتحانات. راجع الإرشاد الأكاديمي قبل ما تسجل أي مادة. آخر تحديث: 12 نوفمبر 2026.</p>
+
+  <div class="bar">
+    <div class="row">
+      <input id="q" class="search" type="search" placeholder="دوّر بالاسم أو الكود (مثلاً: نظم التشغيل أو CS201)" aria-label="بحث عن مادة" autocomplete="off">
+      <label class="toggle" for="availOnly"><input id="availOnly" type="checkbox"> اللي أقدر أسجله دلوقتي بس</label>
+    </div>
+    <div class="chips" id="tracks" role="group" aria-label="التخصص"></div>
+    <div class="legend">
+      <span class="k"><i class="sw sel"></i>المادة اللي اخترتها</span>
+      <span class="k"><i class="sw up"></i>لازم تخلصها قبلها</span>
+      <span class="k"><i class="sw down"></i>بتفتحها بعدها</span>
+      <span class="k"><i class="sw ok"></i>خلصتها</span>
+      <span class="prog" id="prog" aria-live="polite"></span>
+    </div>
+  </div>
+
+  <div class="layout">
+    <main class="levels" id="levels"></main>
+    <aside class="aside empty" id="aside" aria-live="polite"></aside>
+  </div>
+
+  <section class="credit" aria-label="عن صاحب الخريطة">
+    <div>
+      <p class="who">Mostafa Mohamed · مصطفى محمد</p>
+      <p class="role">طالب بالمستوى الثاني، كلية الحاسبات والمعلومات، جامعة الزقازيق</p>
+      <p>لو الخريطة فادتك، تابعني على LinkedIn وشاركها مع زمايلك.</p>
+    </div>
+    <div class="acts">
+      <a href="https://www.linkedin.com/in/mostafa-mohamed-68056b433" target="_blank" rel="noopener noreferrer">تابعني على LinkedIn</a>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <p>المواد والمتطلبات من اللائحة الداخلية 2019 (نظام الساعات المعتمدة). اللائحة نفسها ما بتحدّدش ترم لكل مادة، فالترم هنا مأخوذ من جداول الامتحانات: الترم الأول 2026/2027 للمستويين الأول والثاني والمواد الأساسية للمستوى الثالث، والترم الثاني 2025/2026 لباقي المستويات. المواد اللي مش في الجداول بتظهر تحت كل مستوى في قائمة "مواد اختيارية".</p>
+    <p>"اللي أقدر أسجله" بيعتمد على المتطلب السابق بس. شروط عدد الساعات للمستوى والتدريب العملي (بعد 60 ساعة) مش محسوبة.</p>
+  </footer>
+</div>
+
+<script>
+document.documentElement.setAttribute('dir', 'rtl'); document.documentElement.setAttribute('lang', 'ar');
+const D = [{"c":"BS100","ar":"الرياضيات I","en":"Mathematics I","cr":3,"pre":[],"g":"basic","tr":{},"pl":[1,1],"alt":[],"lv":1,"n":""},{"c":"BS101","ar":"الرياضيات II","en":"Mathematics II","cr":3,"pre":["BS100"],"g":"basic","tr":{},"pl":[1,2],"alt":[],"lv":1,"n":""},{"c":"BS102","ar":"فيزياء الحاسب","en":"Physics for Computing","cr":3,"pre":[],"g":"basic","tr":{},"pl":[1,1],"alt":[],"lv":1,"n":""},{"c":"BS103","ar":"الإحصاء والاحتمالات","en":"Probability and Statistics","cr":3,"pre":["BS100"],"g":"basic","tr":{},"pl":[1,1],"alt":[],"lv":1,"n":"الجدول حاطها في نفس ترم الرياضيات I، فلازم تكون ناجح في BS100 قبلها."},{"c":"CS100","ar":"مقدمة في التفكير الحسابي","en":"Introduction to Computational Thinking","cr":3,"pre":[],"g":"core","tr":{},"pl":[1,1],"alt":[],"lv":1,"n":""},{"c":"CS101","ar":"برمجة الحاسب I","en":"Computer Programming I","cr":3,"pre":[],"g":"core","tr":{},"pl":[1,1],"alt":[],"lv":1,"n":""},{"c":"CS102","ar":"برمجة الحاسب II","en":"Computer Programming II","cr":3,"pre":["CS101"],"g":"core","tr":{},"pl":[1,2],"alt":[],"lv":1,"n":""},{"c":"CS103","ar":"تراكيب محددة","en":"Discrete Structures","cr":3,"pre":["BS100"],"g":"basic","tr":{},"pl":[1,2],"alt":[],"lv":1,"n":""},{"c":"DS100","ar":"بحوث العمليات","en":"Operations Research","cr":3,"pre":[],"g":"basic","tr":{},"pl":[1,2],"alt":[],"lv":1,"n":""},{"c":"HU100","ar":"اللغة الإنجليزية","en":"English","cr":2,"pre":[],"g":"univ","tr":{},"pl":[1,1],"alt":[],"lv":1,"n":""},{"c":"HU101","ar":"كتابة التقارير ومهارات العرض","en":"Report Writing and Presentation Skills","cr":2,"pre":["HU100"],"g":"univ","tr":{},"pl":[2,1],"alt":[],"lv":1,"n":""},{"c":"HU102","ar":"القضايا الاجتماعية والأخلاقية والمهنية في الحوسبة","en":"Social, Ethical, and Professional Issues in Computing","cr":2,"pre":[],"g":"univ","tr":{},"pl":[1,2],"alt":[],"lv":1,"n":""},{"c":"HU103","ar":"حقوق الإنسان ومكافحة الفساد","en":"Human Rights and Anticorruption","cr":0,"pre":[],"g":"univ","tr":{},"pl":[1,2],"alt":[],"lv":1,"n":"مادة نجاح ورسوب ومبتتحسبش في المجموع ولا في المعدل التراكمي."},{"c":"HU104","ar":"السلوك التنظيمي","en":"Organizational Behavior","cr":2,"pre":[],"g":"univ_opt","tr":{},"pl":[2,2],"alt":[],"lv":1,"n":""},{"c":"HU105","ar":"مهارات الاتصال والتفاوض","en":"Communication and Negotiation Skills","cr":2,"pre":[],"g":"univ_opt","tr":{},"pl":null,"alt":[],"lv":1,"n":""},{"c":"HU106","ar":"التخطيط الاستراتيجي","en":"Strategic Planning","cr":2,"pre":[],"g":"univ_opt","tr":{},"pl":[3,1],"alt":[],"lv":1,"n":""},{"c":"HU107","ar":"أساسيات الإدارة","en":"Fundamentals of Management","cr":2,"pre":[],"g":"univ_opt","tr":{},"pl":null,"alt":[],"lv":1,"n":""},{"c":"HU108","ar":"أساسيات الاقتصاد ودراسات الجدوى","en":"Fundamentals of Economics and Feasibility Study","cr":2,"pre":[],"g":"univ_opt","tr":{},"pl":[3,2],"alt":[],"lv":1,"n":""},{"c":"HU109","ar":"إدارة الأعمال","en":"Business Management","cr":2,"pre":[],"g":"univ_opt","tr":{},"pl":null,"alt":[],"lv":1,"n":""},{"c":"HU110","ar":"ريادة الأعمال والابتكار","en":"Entrepreneurship and Innovation","cr":2,"pre":[],"g":"univ_opt","tr":{},"pl":null,"alt":[],"lv":1,"n":""},{"c":"HU111","ar":"التسويق الرقمي","en":"Digital Marketing","cr":2,"pre":[],"g":"univ_opt","tr":{},"pl":null,"alt":[],"lv":1,"n":""},{"c":"HU112","ar":"مبادئ المحاسبة","en":"Fundamentals of Accounting","cr":2,"pre":[],"g":"univ_opt","tr":{},"pl":null,"alt":[],"lv":1,"n":""},{"c":"HU113","ar":"أساسيات كتابة المنح","en":"Fundamentals of Grant Writing","cr":2,"pre":[],"g":"univ_opt","tr":{},"pl":null,"alt":[],"lv":1,"n":""},{"c":"IT100","ar":"التصميم المنطقي","en":"Digital Logic Design","cr":3,"pre":[],"g":"basic","tr":{},"pl":[1,2],"alt":[],"lv":1,"n":""},{"c":"BS201","ar":"الرياضيات III","en":"Mathematics III","cr":3,"pre":["BS101"],"g":"basic","tr":{},"pl":[2,1],"alt":[],"lv":2,"n":""},{"c":"CS200","ar":"هياكل البيانات","en":"Data Structures","cr":3,"pre":["CS102"],"g":"core","tr":{},"pl":[2,1],"alt":[],"lv":2,"n":""},{"c":"CS201","ar":"نظم التشغيل","en":"Operating Systems","cr":3,"pre":["CS100"],"g":"core","tr":{},"pl":[2,1],"alt":[],"lv":2,"n":""},{"c":"CS202","ar":"تحليل وتصميم الخوارزميات","en":"Analysis and Design of Algorithms","cr":3,"pre":["CS200"],"g":"core","tr":{},"pl":[2,2],"alt":[],"lv":2,"n":""},{"c":"CS203","ar":"الذكاء الاصطناعي","en":"Artificial Intelligence","cr":3,"pre":["CS200"],"g":"core","tr":{},"pl":[2,2],"alt":[],"lv":2,"n":""},{"c":"IS200","ar":"نظم قواعد البيانات","en":"Database Systems","cr":3,"pre":["CS102"],"g":"core","tr":{},"pl":[2,1],"alt":[],"lv":2,"n":""},{"c":"IS201","ar":"تحليل وتصميم النظم","en":"Systems Analysis and Design","cr":3,"pre":["IS200"],"g":"core","tr":{},"pl":[2,2],"alt":[],"lv":2,"n":""},{"c":"IT200","ar":"معمارية وتنظيم الحاسب","en":"Computer Organization and Architecture","cr":3,"pre":["IT100"],"g":"core","tr":{},"pl":[2,1],"alt":[],"lv":2,"n":""},{"c":"IT201","ar":"الرسم بالحاسب","en":"Computer Graphics","cr":3,"pre":["BS101"],"g":"core","tr":{},"pl":[2,2],"alt":[],"lv":2,"n":""},{"c":"IT202","ar":"شبكات الحاسب","en":"Computer Networks","cr":3,"pre":["CS201"],"g":"core","tr":{},"pl":[2,2],"alt":[],"lv":2,"n":""},{"c":"IT203","ar":"الوسائط المتعددة","en":"Multimedia","cr":3,"pre":["IT201"],"g":"core","tr":{},"pl":[3,1],"alt":[],"lv":2,"n":""},{"c":"CS300","ar":"التفاعل بين الإنسان والآلة","en":"Human Computer Interaction","cr":3,"pre":["CS200"],"g":"trk","tr":{"CS":"m","IS":"e","IT":"e"},"pl":[3,2],"alt":[],"lv":3,"n":""},{"c":"CS301","ar":"برمجة النظم","en":"Systems Programming","cr":3,"pre":["CS201"],"g":"trk","tr":{"CS":"m","IT":"e"},"pl":[4,2],"alt":[],"lv":3,"n":""},{"c":"CS302","ar":"اللغات الصورية","en":"Formal Languages","cr":3,"pre":["CS200"],"g":"trk","tr":{"CS":"m"},"pl":[3,2],"alt":[],"lv":3,"n":""},{"c":"CS303","ar":"تعلم الآلة","en":"Machine Learning","cr":3,"pre":["CS203"],"g":"trk","tr":{"CS":"m","IT":"e"},"pl":[3,2],"alt":[],"lv":3,"n":""},{"c":"CS304","ar":"اختبار وصيانة البرمجيات","en":"Software Testing and Maintenance","cr":3,"pre":["IS201"],"g":"trk","tr":{"CS":"m"},"pl":[4,1],"alt":[[4,2]],"lv":3,"n":""},{"c":"DS300","ar":"إدارة مشروعات البرمجيات","en":"Software Project Management","cr":3,"pre":["DS100"],"g":"trk","tr":{"CS":"m","IS":"m","GI":"m","IT":"m","DS":"m"},"pl":[3,2],"alt":[],"lv":3,"n":""},{"c":"DS301","ar":"النمذجة والمحاكاة","en":"Modeling and Simulation","cr":3,"pre":["DS100","BS103"],"g":"trk","tr":{"DS":"m"},"pl":[3,2],"alt":[],"lv":3,"n":""},{"c":"DS302","ar":"بحوث العمليات المتقدمة","en":"Advanced operations Research","cr":3,"pre":["DS100"],"g":"trk","tr":{"DS":"m"},"pl":[3,2],"alt":[],"lv":3,"n":""},{"c":"DS303","ar":"منهجيات دعم القرار","en":"Decision Support Methodologies","cr":3,"pre":["DS100"],"g":"trk","tr":{"DS":"m"},"pl":[3,2],"alt":[],"lv":3,"n":""},{"c":"DS304","ar":"إدارة الجودة","en":"Quality Management","cr":3,"pre":["DS100"],"g":"trk","tr":{"DS":"e"},"pl":null,"alt":[],"lv":3,"n":""},{"c":"DS305","ar":"نمذجة النظم الديناميكية","en":"Systems Dynamics Modeling","cr":3,"pre":["DS301"],"g":"trk","tr":{"DS":"m"},"pl":[4,1],"alt":[],"lv":3,"n":""},{"c":"GI300","ar":"نظم المعلومات الجغرافية","en":"Geographical Information Systems","cr":3,"pre":["IS200","IS201"],"g":"trk","tr":{"IS":"m","GI":"m"},"pl":[3,2],"alt":[],"lv":3,"n":""},{"c":"GI301","ar":"مبادئ الاستشعار عن بعد","en":"Principles of Remote Sensing","cr":3,"pre":["GI300"],"g":"trk","tr":{"GI":"m"},"pl":[4,1],"alt":[],"lv":3,"n":""},{"c":"GI302","ar":"قواعد البيانات المكانية","en":"Spatial Database","cr":3,"pre":["GI300"],"g":"trk","tr":{"GI":"m"},"pl":[3,2],"alt":[],"lv":3,"n":"الجدول حاطها في نفس ترم GI300، فلازم تكون ناجح في GI300 قبلها."},{"c":"IS300","ar":"نظم إدارة قواعد بيانات","en":"Database Management Systems","cr":3,"pre":["IS200"],"g":"trk","tr":{"IS":"m","GI":"m"},"pl":[3,2],"alt":[],"lv":3,"n":""},{"c":"IS301","ar":"الأنظمة الذكية وذكاء الأعمال","en":"Intelligent Systems and Business Intelligence","cr":3,"pre":["IS201"],"g":"trk","tr":{"IS":"m"},"pl":[3,2],"alt":[],"lv":3,"n":""},{"c":"IS303","ar":"مقدمة في البيانات الضخمة","en":"Introduction to Big Data","cr":3,"pre":["IS200"],"g":"trk","tr":{"CS":"m","IS":"m","GI":"m","IT":"m","DS":"m"},"pl":[3,1],"alt":[],"lv":3,"n":""},{"c":"IS304","ar":"الأعمال الإلكترونية","en":"E-Business","cr":3,"pre":["IS201"],"g":"trk","tr":{"IS":"m"},"pl":[4,1],"alt":[],"lv":3,"n":""},{"c":"IT300","ar":"معالجة الإشارات الرقمية","en":"Digital Signal Processing","cr":3,"pre":["BS101"],"g":"trk","tr":{"IT":"m"},"pl":[3,2],"alt":[],"lv":3,"n":""},{"c":"IT301","ar":"برمجة الشبكات والإنترنت","en":"Web and Network Programming","cr":3,"pre":["CS200"],"g":"core","tr":{},"pl":[3,1],"alt":[],"lv":3,"n":""},{"c":"IT302","ar":"مقدمة في إنترنت الأشياء","en":"Introduction to Internet of Things","cr":3,"pre":["CS200"],"g":"trk","tr":{"CS":"m","IS":"m","GI":"m","IT":"m","DS":"m"},"pl":[3,2],"alt":[],"lv":3,"n":""},{"c":"IT303","ar":"مقدمة في الحوسبة السحابية","en":"Introduction to Cloud Computing","cr":3,"pre":["CS200"],"g":"trk","tr":{"CS":"m","IS":"m","GI":"m","IT":"m","DS":"m"},"pl":[3,1],"alt":[],"lv":3,"n":""},{"c":"IT304","ar":"مقدمة في الأمن السيبراني","en":"Introduction to Cybersecurity","cr":3,"pre":["CS200"],"g":"trk","tr":{"CS":"m","IS":"m","GI":"m","IT":"m","DS":"m"},"pl":[3,1],"alt":[],"lv":3,"n":""},{"c":"IT305","ar":"تطوير تطبيقات الهاتف المحمول","en":"Mobile Application Development","cr":3,"pre":["CS200"],"g":"trk","tr":{"CS":"e","IT":"m"},"pl":[4,1],"alt":[],"lv":3,"n":""},{"c":"IT306","ar":"الشبكات اللاسلكية والمتحركة","en":"Wireless and Mobile Networks","cr":3,"pre":["IT202"],"g":"trk","tr":{"IT":"m"},"pl":[4,1],"alt":[],"lv":3,"n":""},{"c":"IT307","ar":"تصميم النظم المدمجة","en":"Embedded Systems Design","cr":3,"pre":["IT200"],"g":"trk","tr":{"IT":"m"},"pl":[4,1],"alt":[],"lv":3,"n":""},{"c":"IT308","ar":"المتحكمات الصغيرة","en":"Microcontrollers","cr":3,"pre":["CS200"],"g":"trk","tr":{"IT":"m"},"pl":[3,2],"alt":[],"lv":3,"n":""},{"c":"CS400","ar":"الحوسبة فائقة الأداء","en":"High Performance Computing","cr":3,"pre":["CS201"],"g":"trk","tr":{"CS":"m"},"pl":[4,1],"alt":[],"lv":4,"n":""},{"c":"CS401","ar":"تصميم المترجمات","en":"Compiler Design","cr":3,"pre":["CS200"],"g":"trk","tr":{"CS":"m"},"pl":[4,2],"alt":[],"lv":4,"n":""},{"c":"CS402","ar":"الخوارزميات الموزعة والمتزامنة","en":"Distributed and Concurrent Algorithms","cr":3,"pre":["CS202"],"g":"trk","tr":{"CS":"m"},"pl":[4,2],"alt":[],"lv":4,"n":""},{"c":"CS403","ar":"الشبكات العصبية والتعلم العميق","en":"Neural networks and deep learning","cr":3,"pre":["CS203"],"g":"trk","tr":{"CS":"m"},"pl":[4,1],"alt":[],"lv":4,"n":""},{"c":"CS404","ar":"المعلوماتية الحيوية","en":"Bioinformatics","cr":3,"pre":["CS202"],"g":"trk","tr":{"CS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"CS405","ar":"المنطق الضبابي والأنظمة الذكية","en":"Fuzzy Logic and Intelligent Systems","cr":3,"pre":["CS203"],"g":"trk","tr":{"CS":"e","DS":"e"},"pl":null,"alt":[],"lv":4,"n":"في قسم دعم القرار مكتوبة في اللائحة بكود CS416 (نفس المادة)."},{"c":"CS406","ar":"معمارية وتصميم البرمجيات","en":"Software Design and Architecture","cr":3,"pre":["IS201"],"g":"trk","tr":{"CS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"CS407","ar":"معالجة اللغات الطبيعية","en":"Natural Language Processing","cr":3,"pre":["CS303"],"g":"trk","tr":{"CS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"CS408","ar":"الحوسبة المرنة","en":"Soft Computing","cr":3,"pre":["CS203"],"g":"trk","tr":{"CS":"e"},"pl":[4,1],"alt":[],"lv":4,"n":""},{"c":"CS409","ar":"مقدمة في التشفير","en":"Introduction to Cryptography","cr":3,"pre":["IT304"],"g":"trk","tr":{"CS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"CS410","ar":"نظرية الحسابات","en":"Theory of Computation","cr":3,"pre":["CS302"],"g":"trk","tr":{"CS":"e"},"pl":[4,2],"alt":[],"lv":4,"n":""},{"c":"CS411","ar":"تصميم لغات البرمجة","en":"Programming Language Design","cr":3,"pre":["CS200"],"g":"trk","tr":{"CS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"CS412","ar":"عملاء أذكياء","en":"Intelligent Agents","cr":3,"pre":["CS203"],"g":"trk","tr":{"CS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"CS413","ar":"أداء نظم الحاسب الآلي","en":"Computer Systems Performance","cr":3,"pre":["CS201"],"g":"trk","tr":{"CS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"CS425","ar":"موضوعات مختارة في علوم الحاسب I","en":"Selected Topics in Computer Science I","cr":3,"pre":[],"g":"trk","tr":{"CS":"e"},"pl":[4,1],"alt":[],"lv":4,"n":""},{"c":"CS426","ar":"موضوعات مختارة في علوم الحاسب II","en":"Selected Topics in Computer Science II","cr":3,"pre":[],"g":"trk","tr":{"CS":"e"},"pl":[4,2],"alt":[],"lv":4,"n":""},{"c":"CS430","ar":"المشروع I","en":"Project I","cr":3,"pre":[],"g":"trk","tr":{"CS":"p"},"pl":[4,1],"alt":[],"lv":4,"n":""},{"c":"CS431","ar":"المشروع II","en":"Project II","cr":3,"pre":["CS430"],"g":"trk","tr":{"CS":"p"},"pl":[4,2],"alt":[],"lv":4,"n":""},{"c":"DS400","ar":"تحليل البيانات","en":"Data Analytics","cr":3,"pre":["DS100"],"g":"trk","tr":{"DS":"m"},"pl":[4,1],"alt":[[4,2]],"lv":4,"n":""},{"c":"DS401","ar":"الطرق العشوائية","en":"Stochastic Methods","cr":3,"pre":["DS100"],"g":"trk","tr":{"DS":"m"},"pl":[4,1],"alt":[],"lv":4,"n":""},{"c":"DS402","ar":"الإدارة الاستراتيجية وتحليل الأعمال","en":"Strategic Management and Business Analysis","cr":3,"pre":["DS303"],"g":"trk","tr":{"DS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"DS403","ar":"الذكاء الحسابي","en":"Computational Intelligence","cr":3,"pre":["CS203"],"g":"trk","tr":{"DS":"m"},"pl":[4,1],"alt":[[4,2]],"lv":4,"n":""},{"c":"DS404","ar":"تخطيط سلسلة التوريد والخدمات اللوجستية","en":"Supply Chain Planning and Logistics","cr":3,"pre":["DS100"],"g":"trk","tr":{"DS":"m"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"DS405","ar":"تقنيات التنبؤ","en":"Forecasting Techniques","cr":3,"pre":["DS100"],"g":"trk","tr":{"DS":"m"},"pl":[4,1],"alt":[[4,2]],"lv":4,"n":""},{"c":"DS406","ar":"إدارة الخدمات","en":"Service Management","cr":3,"pre":[],"g":"trk","tr":{"DS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"DS407","ar":"إدارة العمليات","en":"Operations Management","cr":3,"pre":["DS100"],"g":"trk","tr":{"DS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"DS408","ar":"البرمجة متعددة الأهداف","en":"Multi-Objective Programing","cr":3,"pre":["DS100"],"g":"trk","tr":{"DS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"DS409","ar":"تخطيط الإنتاج ومراقبة المخازن","en":"Production Planning and Inventory Control","cr":3,"pre":["DS303"],"g":"trk","tr":{"DS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"DS410","ar":"نظرية القرارات والألعاب","en":"Decision and Game Theory","cr":3,"pre":["DS303"],"g":"trk","tr":{"DS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"DS411","ar":"القرار وإدارة المخاطر","en":"Decision and Risk Management","cr":3,"pre":["DS303"],"g":"trk","tr":{"DS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"DS412","ar":"نماذج وطرق الأمثلة","en":"Optimization Models and Methods","cr":3,"pre":["DS403"],"g":"trk","tr":{"DS":"e"},"pl":[4,2],"alt":[],"lv":4,"n":""},{"c":"DS413","ar":"تقنيات الجدولة","en":"Scheduling Techniques","cr":3,"pre":["DS100"],"g":"trk","tr":{"DS":"e"},"pl":[4,2],"alt":[],"lv":4,"n":""},{"c":"DS414","ar":"مراقبة الجودة والموثوقية","en":"Quality Control and Reliability","cr":3,"pre":["DS304"],"g":"trk","tr":{"DS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"DS415","ar":"العمليات العشوائية ونماذج الانتظار","en":"Stochastic Processes and Queuing Models","cr":3,"pre":["DS100"],"g":"trk","tr":{"DS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"DS416","ar":"برمجة تحليل البيانات","en":"Data Analytics Programming","cr":3,"pre":["DS400"],"g":"trk","tr":{"DS":"e"},"pl":[4,2],"alt":[],"lv":4,"n":""},{"c":"DS417","ar":"تحليل القرار","en":"Decision Analysis","cr":3,"pre":["DS303"],"g":"trk","tr":{"DS":"e"},"pl":[4,2],"alt":[],"lv":4,"n":""},{"c":"DS418","ar":"نمذجة وأمثلية الشبكات","en":"Network Modelling and Optimization","cr":3,"pre":["DS301"],"g":"trk","tr":{"DS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"DS419","ar":"إدارة المشروعات المتقدمة","en":"Advanced Project Management","cr":3,"pre":["DS300"],"g":"trk","tr":{"DS":"e"},"pl":[4,2],"alt":[],"lv":4,"n":""},{"c":"DS425","ar":"موضوعات مختارة في بحوث العمليات ودعم القرار I","en":"Selected Topics in Operations Research and Decision Support I","cr":3,"pre":[],"g":"trk","tr":{"DS":"e"},"pl":[4,2],"alt":[],"lv":4,"n":""},{"c":"DS426","ar":"موضوعات مختارة في بحوث العمليات ودعم القرار II","en":"Selected Topics in Operations Research and Decision Support II","cr":3,"pre":[],"g":"trk","tr":{"DS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"DS430","ar":"المشروع I","en":"Project I","cr":3,"pre":[],"g":"trk","tr":{"DS":"p"},"pl":[4,1],"alt":[],"lv":4,"n":""},{"c":"DS431","ar":"المشروع II","en":"Project II","cr":3,"pre":["DS430"],"g":"trk","tr":{"DS":"p"},"pl":[4,2],"alt":[],"lv":4,"n":""},{"c":"GI400","ar":"الكارتوجرافيا الرقمية والتجسيد المرئي","en":"Digital Cartography and Visualization","cr":3,"pre":["GI300"],"g":"trk","tr":{"GI":"m"},"pl":[4,2],"alt":[],"lv":4,"n":""},{"c":"GI401","ar":"التحليل والنمذجة المكانية","en":"Spatial Analysis and Modeling","cr":3,"pre":["GI300"],"g":"trk","tr":{"GI":"m"},"pl":[4,1],"alt":[],"lv":4,"n":""},{"c":"GI402","ar":"برمجة نظم المعلومات الجغرافية","en":"GIS Programming","cr":3,"pre":["GI300"],"g":"trk","tr":{"GI":"m"},"pl":[4,1],"alt":[],"lv":4,"n":""},{"c":"GI403","ar":"نظم دعم القرارات المكانية","en":"Spatial Decision Support Systems","cr":3,"pre":["GI300"],"g":"trk","tr":{"GI":"m"},"pl":[4,2],"alt":[],"lv":4,"n":""},{"c":"GI404","ar":"نظم المعلومات الجغرافية على الويب والمحمول","en":"Web and Mobile GIS","cr":3,"pre":["GI300","IT301"],"g":"trk","tr":{"GI":"m"},"pl":[4,2],"alt":[],"lv":4,"n":""},{"c":"GI405","ar":"الإحصاء المكاني","en":"Spatial Statistics","cr":3,"pre":["GI300"],"g":"trk","tr":{"GI":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"GI406","ar":"البنية التحتية لنظم المعلومات الجغرافية الموزعة والمفتوحة","en":"Open and Distributed GIS Infrastructures","cr":3,"pre":["GI300"],"g":"trk","tr":{"GI":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"GI407","ar":"نظم المعلومات الجغرافية الطبية","en":"Medical GIS","cr":3,"pre":["GI300"],"g":"trk","tr":{"GI":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"GI408","ar":"نمذجة الشبكات باستخدام نظم المعلومات الجغرافية","en":"GIS Network Modeling","cr":3,"pre":["GI300"],"g":"trk","tr":{"GI":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"GI409","ar":"التنقيب في البيانات المكانية","en":"Spatial Data Mining","cr":3,"pre":["IS201"],"g":"trk","tr":{"GI":"e"},"pl":[4,2],"alt":[],"lv":4,"n":""},{"c":"GI410","ar":"تطبيقات الاستشعار عن بعد","en":"Remote Sensing Application","cr":3,"pre":["GI301"],"g":"trk","tr":{"GI":"e"},"pl":[4,2],"alt":[],"lv":4,"n":""},{"c":"GI411","ar":"البيانات المكانية الضخمة","en":"Spatial Big Data","cr":3,"pre":["IS303"],"g":"trk","tr":{"GI":"e"},"pl":[4,1],"alt":[],"lv":4,"n":""},{"c":"GI412","ar":"نظم المعلومات الجغرافية والأمن السيبراني","en":"GIS and Cyber Security","cr":3,"pre":["IT304"],"g":"trk","tr":{"GI":"e"},"pl":[4,1],"alt":[],"lv":4,"n":""},{"c":"GI413","ar":"نظم المعلومات الجغرافية السحابية","en":"Cloud GIS","cr":3,"pre":["IT303"],"g":"trk","tr":{"GI":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"GI414","ar":"تقنيات جمع البيانات المكانية","en":"Spatial Data Acquisition Techniques","cr":3,"pre":["GI300"],"g":"trk","tr":{"GI":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"GI425","ar":"موضوعات مختارة في الجيومعلوماتية I","en":"Selected Topics in Geoinformatics I","cr":3,"pre":[],"g":"trk","tr":{"GI":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"GI426","ar":"موضوعات مختارة في الجيومعلوماتية II","en":"Selected Topics in Geoinformatics II","cr":3,"pre":[],"g":"trk","tr":{"GI":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"GI430","ar":"المشروع I","en":"Project I","cr":3,"pre":[],"g":"trk","tr":{"GI":"p"},"pl":[4,1],"alt":[],"lv":4,"n":""},{"c":"GI431","ar":"المشروع II","en":"Project II","cr":3,"pre":["GI430"],"g":"trk","tr":{"GI":"p"},"pl":[4,2],"alt":[],"lv":4,"n":""},{"c":"IS400","ar":"تحليلات البيانات الضخمة","en":"Big Data Analytics","cr":3,"pre":["IS303"],"g":"trk","tr":{"IS":"m"},"pl":[4,1],"alt":[],"lv":4,"n":""},{"c":"IS401","ar":"أمن المعلومات","en":"Information Security","cr":3,"pre":["IT304"],"g":"trk","tr":{"IS":"m"},"pl":[4,1],"alt":[],"lv":4,"n":""},{"c":"IS402","ar":"نظم قواعد البيانات الموزعة والمحمولة","en":"Distributed and Mobile Databases","cr":3,"pre":["IS200"],"g":"trk","tr":{"IS":"m"},"pl":[4,2],"alt":[],"lv":4,"n":""},{"c":"IS403","ar":"تقنية سلسلة الكتل","en":"Blockchain Technologies","cr":3,"pre":["IT304"],"g":"trk","tr":{"IS":"e","GI":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"IS404","ar":"تحليلات الويب والوسائط الاجتماعية","en":"Web and Social Media Analytics","cr":3,"pre":["IS400"],"g":"trk","tr":{"IS":"e"},"pl":[4,2],"alt":[],"lv":4,"n":""},{"c":"IS405","ar":"التنقيب في البيانات والتعلم الآلي","en":"Data Mining and Machine Learning","cr":3,"pre":["IS201"],"g":"trk","tr":{"IS":"m","DS":"e"},"pl":[4,2],"alt":[],"lv":4,"n":""},{"c":"IS406","ar":"استرجاع المعلومات","en":"Information Retrieval","cr":3,"pre":["IS201"],"g":"trk","tr":{"IS":"m"},"pl":[4,2],"alt":[],"lv":4,"n":""},{"c":"IS407","ar":"عرض مرئي للبيانات","en":"Data Visualization","cr":3,"pre":["IS303"],"g":"trk","tr":{"IS":"e"},"pl":[4,1],"alt":[],"lv":4,"n":""},{"c":"IS408","ar":"هندسة البرمجيات","en":"Software Engineering","cr":3,"pre":["IS201"],"g":"trk","tr":{"IS":"e"},"pl":[4,2],"alt":[],"lv":4,"n":""},{"c":"IS409","ar":"إدارة قواعد البيانات","en":"Database Administration","cr":3,"pre":["IS201"],"g":"trk","tr":{"IS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"IS410","ar":"إدارة الشركات الرقمية","en":"Managing Digital Firms","cr":3,"pre":["IS200"],"g":"trk","tr":{"IS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"IS411","ar":"مستودعات البيانات","en":"Data Warehousing","cr":3,"pre":["IS300"],"g":"trk","tr":{"IS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"IS412","ar":"إدارة عمليات الأعمال","en":"Business Process Management","cr":3,"pre":["IS201"],"g":"trk","tr":{"IS":"e"},"pl":[4,1],"alt":[],"lv":4,"n":""},{"c":"IS413","ar":"نظم المعلومات على شبكة الإنترنت","en":"Web-based Information Systems","cr":3,"pre":["IT301"],"g":"trk","tr":{"IS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"IS414","ar":"برمجة تحليل الأعمال","en":"Business Analytics Programming","cr":3,"pre":["CS200"],"g":"trk","tr":{"IS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"IS415","ar":"نظم معلومات المؤسسة","en":"Enterprise Information Systems","cr":3,"pre":["IS201"],"g":"trk","tr":{"IS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"IS416","ar":"تدقيق نظم المعلومات","en":"Information Systems Auditing","cr":3,"pre":["IS201"],"g":"trk","tr":{"IS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"IS417","ar":"نظم معلومات الوسائط المتعددة","en":"Multimedia Information Systems","cr":3,"pre":["IS201"],"g":"trk","tr":{"IS":"e","IT":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"IS418","ar":"تحليل متطلبات البرمجيات","en":"Software Requirements Analysis","cr":3,"pre":["IS201"],"g":"trk","tr":{"IS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"IS419","ar":"أنماط تصميم النظم","en":"Systems Design Patterns","cr":3,"pre":["IS201"],"g":"trk","tr":{"IS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"IS420","ar":"إدارة المعرفة","en":"Knowledge Management","cr":3,"pre":["IS201"],"g":"trk","tr":{"IS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"IS421","ar":"قواعد البيانات السحابية","en":"Cloud Databases","cr":3,"pre":["IT303"],"g":"trk","tr":{"IS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"IS422","ar":"ضمان جودة نظم المعلومات","en":"Information Systems Quality Assurance","cr":3,"pre":["IS201"],"g":"trk","tr":{"IS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"IS425","ar":"موضوعات مختارة في نظم المعلومات I","en":"Selected Topics in Information Systems I","cr":3,"pre":[],"g":"trk","tr":{"IS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"IS426","ar":"موضوعات مختارة في نظم المعلومات II","en":"Selected Topics in Information Systems II","cr":3,"pre":[],"g":"trk","tr":{"IS":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"IS430","ar":"المشروع I","en":"Project I","cr":3,"pre":[],"g":"trk","tr":{"IS":"p"},"pl":[4,1],"alt":[],"lv":4,"n":""},{"c":"IS431","ar":"المشروع II","en":"Project II","cr":3,"pre":["IS430"],"g":"trk","tr":{"IS":"p"},"pl":[4,2],"alt":[],"lv":4,"n":""},{"c":"IT401","ar":"معالجة الصور","en":"Image Processing","cr":3,"pre":["IT300"],"g":"trk","tr":{"IT":"m"},"pl":[4,1],"alt":[[4,2]],"lv":4,"n":""},{"c":"IT402","ar":"أمان الشبكات","en":"Network Security","cr":3,"pre":["IT304","IT202"],"g":"trk","tr":{"IT":"m"},"pl":[4,2],"alt":[],"lv":4,"n":""},{"c":"IT403","ar":"الرؤية بالحاسب","en":"Computer Vision","cr":3,"pre":["IT203"],"g":"trk","tr":{"IT":"m"},"pl":[4,2],"alt":[],"lv":4,"n":""},{"c":"IT404","ar":"الإنسان الآلي","en":"Robotics","cr":3,"pre":["IT200"],"g":"trk","tr":{"IT":"m"},"pl":[4,2],"alt":[],"lv":4,"n":""},{"c":"IT405","ar":"الرسوم المتحركة والنمذجة ثلاثية الأبعاد","en":"Computer Animation and 3D Modeling","cr":3,"pre":["IT203"],"g":"trk","tr":{"IT":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"IT406","ar":"نظرية المعلومات وضغط البيانات","en":"Information Theory and Data Compression","cr":3,"pre":["IT202"],"g":"trk","tr":{"IT":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"IT407","ar":"الواقع الافتراضي والمعزز","en":"Virtual and Augmented Reality","cr":3,"pre":["IT203"],"g":"trk","tr":{"IT":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"IT408","ar":"محاكاة الشبكات","en":"Network Simulation","cr":3,"pre":["IT202"],"g":"trk","tr":{"IT":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"IT409","ar":"العلوم الجنائية الحاسوبية","en":"Computer Forensics","cr":3,"pre":["IT200"],"g":"trk","tr":{"IT":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"IT410","ar":"الشبكات السحابية","en":"Cloud Networks","cr":3,"pre":["IT202"],"g":"trk","tr":{"IT":"e"},"pl":[4,2],"alt":[],"lv":4,"n":""},{"c":"IT411","ar":"التعرف على الأنماط","en":"Pattern Recognition","cr":3,"pre":["IT203"],"g":"trk","tr":{"IT":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"IT412","ar":"التنقيب في الوسائط المتعددة","en":"Multimedia Mining","cr":3,"pre":["IT203"],"g":"trk","tr":{"IT":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"IT413","ar":"الشبكات الضوئية","en":"Optical Networks","cr":3,"pre":["IT202"],"g":"trk","tr":{"IT":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"IT414","ar":"حوسبة الكم","en":"Quantum Computing","cr":3,"pre":["CS201"],"g":"trk","tr":{"IT":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"IT415","ar":"التصوير الحسابي","en":"Computational Imaging","cr":3,"pre":["IT401"],"g":"trk","tr":{"IT":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"IT416","ar":"تطوير الألعاب","en":"Game Development","cr":3,"pre":["CS200"],"g":"trk","tr":{"IT":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"IT417","ar":"شبكات الاستشعار اللاسلكية","en":"Wireless Sensors Networks","cr":3,"pre":["IT202"],"g":"trk","tr":{"IT":"e"},"pl":null,"alt":[],"lv":4,"n":""},{"c":"IT425","ar":"موضوعات مختارة في تكنولوجيا المعلومات I","en":"Selected Topics in Information Technology I","cr":3,"pre":[],"g":"trk","tr":{"IT":"e"},"pl":[4,1],"alt":[],"lv":4,"n":""},{"c":"IT426","ar":"موضوعات مختارة في تكنولوجيا المعلومات II","en":"Selected Topics in Information Technology II","cr":3,"pre":[],"g":"trk","tr":{"IT":"e"},"pl":[4,2],"alt":[],"lv":4,"n":""},{"c":"IT430","ar":"المشروع I","en":"Project I","cr":3,"pre":[],"g":"trk","tr":{"IT":"p"},"pl":[4,1],"alt":[],"lv":4,"n":""},{"c":"IT431","ar":"المشروع II","en":"Project II","cr":3,"pre":["IT430"],"g":"trk","tr":{"IT":"p"},"pl":[4,2],"alt":[],"lv":4,"n":""}];
+const M = new Map(D.map(c => [c.c, c]));
+const LV = ['', 'الأول', 'الثاني', 'الثالث', 'الرابع'];
+const POOLNOTE = 'مواد مش موجودة في جداول الامتحانات فترمها مش محدد، وبيتحدد حسب اللي الكلية بتفتحه. مش مطلوب تدرسها كلها: لازم تاخد 12 ساعة (4 مواد) اختياري من قايمة تخصصك و6 ساعات (3 مواد) اختياري جامعة من HU104 لـ HU113. وممكن تكون فيها كام مادة إجبارية ماظهرتش في الجداول، فراجع الإرشاد الأكاديمي.';
+const LVNOTE = [
+  '', 'بتنتقل للمستوى الثاني بعد ما تجتاز 28 ساعة', 'بتنتقل للمستوى الثالث بعد 60 ساعة',
+  'بتنتقل للمستوى الرابع بعد 100 ساعة', 'مشروع التخرج 6 ساعات على ترمين، والتدريب العملي شهر بعد 60 ساعة'
+];
+const TR = [
+  ['all', 'كل التخصصات'], ['CS', 'علوم الحاسب'], ['IS', 'نظم المعلومات'],
+  ['GI', 'الجيومعلوماتية'], ['IT', 'تكنولوجيا المعلومات'], ['DS', 'بحوث العمليات ودعم القرار']
+];
+const GROUP = { univ: 'متطلب جامعة (إجباري)', univ_opt: 'متطلب جامعة (اختياري)', basic: 'علوم أساسية', core: 'علوم حاسب أساسية', trk: 'متطلب تخصص' };
+const KIND = { m: 'إجباري', e: 'اختياري', p: 'مشروع تخرج' };
+const KRANK = { m: 1, e: 2, p: 3 };
+
+/* relations */
+const kids = new Map();
+D.forEach(c => c.pre.forEach(p => { if (!kids.has(p)) kids.set(p, []); kids.get(p).push(c.c); }));
+const cache = { up: new Map(), down: new Map() };
+function closure(code, dir) {
+  const memo = cache[dir];
+  if (memo.has(code)) return memo.get(code);
+  const out = new Set();
+  const next = dir === 'up' ? M.get(code).pre : (kids.get(code) || []);
+  next.forEach(n => { out.add(n); closure(n, dir).forEach(x => out.add(x)); });
+  memo.set(code, out);
+  return out;
+}
+const order = c => c.pl ? c.pl[0] * 10 + c.pl[1] : c.lv * 10 + 5;
+
+/* state */
+const S = { track: 'all', q: '', avail: false, sel: null, done: new Set(), confirmReset: false };
+try { const raw = localStorage.getItem('zu-fci-done'); if (raw) JSON.parse(raw).forEach(c => { if (M.has(c)) S.done.add(c); }); } catch (e) {}
+function save() { try { localStorage.setItem('zu-fci-done', JSON.stringify([...S.done])); } catch (e) {} }
+
+const norm = s => s.toLowerCase().replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي').replace(/[ً-ْ]/g, '').trim();
+const esc = s => String(s).replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
+const isAvail = c => !S.done.has(c.c) && c.pre.every(p => S.done.has(p));
+
+function visible(c) {
+  if (S.track !== 'all' && c.g === 'trk' && !c.tr[S.track]) return false;
+  if (S.q) { const h = norm(c.c + ' ' + c.ar + ' ' + c.en); if (!h.includes(norm(S.q))) return false; }
+  if (S.avail && !isAvail(c)) return false;
+  return true;
+}
+function rank(c) {
+  if (c.g !== 'trk') return 0;
+  const ks = S.track === 'all' ? Object.values(c.tr) : [c.tr[S.track]];
+  return Math.min(...ks.map(k => KRANK[k]));
+}
+const cmp = (a, b) => rank(a) - rank(b) || a.c.localeCompare(b.c);
+
+/* rendering */
+function tagsFor(c) {
+  if (c.g === 'univ_opt') return '<span class="tag">اختياري</span>';
+  if (c.g !== 'trk') return '<span class="tag">مشترك</span>';
+  if (S.track !== 'all') { const k = c.tr[S.track]; return `<span class="tag kind">${KIND[k]}</span>`; }
+  const ent = Object.entries(c.tr);
+  if (ent.length === 5 && ent.every(([, k]) => k === ent[0][1])) return `<span class="tag kind">كل التخصصات · ${KIND[ent[0][1]]}</span>`;
+  return ent.map(([t, k]) => `<span class="tag t ${t} ${k === 'm' ? 'm' : ''}" title="${KIND[k]}"><span>${t}</span></span>`).join('');
+}
+function cardHTML(c) {
+  const kidsN = (kids.get(c.c) || []).length;
+  const pre = c.pre.length ? `<span class="pre">قبلها ${c.pre.map(p => `<code>${p}</code>`).join('')}</span>` : '';
+  const done = S.done.has(c.c);
+  return `<div class="card${done ? ' done' : ''}" data-c="${c.c}">
+    <button class="pick" data-pick="${c.c}" aria-pressed="false">
+      <span class="top"><span class="code">${c.c}</span><span class="cr">${c.cr ? c.cr + ' ساعات'.replace('ساعات', c.cr === 1 ? 'ساعة' : 'ساعات') : 'نجاح/رسوب'}</span></span>
+      <span class="ar">${esc(c.ar)}</span>
+      <span class="en">${esc(c.en)}</span>
+      <span class="meta">${tagsFor(c)}${pre}${kidsN ? `<span class="opens">بتفتح ${kidsN}</span>` : ''}</span>
+    </button>
+    <button class="tick" data-tick="${c.c}" aria-pressed="${done}" aria-label="${done ? 'شيل علامة الإنجاز من' : 'علّم إنك خلصت'} ${esc(c.ar)}" title="${done ? 'خلصتها' : 'علّم إنك خلصتها'}">✓</button>
+  </div>`;
+}
+function renderLevels() {
+  const searching = !!S.q || S.track !== 'all';
+  let html = '';
+  for (let lv = 1; lv <= 4; lv++) {
+    const lanes = [1, 2].map(t => {
+      const list = D.filter(c => c.pl && c.pl[0] === lv && c.pl[1] === t && visible(c)).sort(cmp);
+      const label = t === 1 ? 'الترم الأول' : 'الترم الثاني';
+      return `<section class="term" aria-label="${label}"><h3><b>${label}</b><span>${list.length} مادة</span></h3>
+        ${list.length ? `<div class="grid">${list.map(cardHTML).join('')}</div>` : '<p class="empty">مفيش مواد مطابقة هنا.</p>'}</section>`;
+    }).join('');
+    const pool = D.filter(c => !c.pl && c.lv === lv && visible(c)).sort(cmp);
+    const poolHTML = pool.length ? `<details class="pool"${searching ? ' open' : ''}><summary><b>مواد اختيارية</b> · ${pool.length} مادة</summary><p class="poolnote">${POOLNOTE}</p><div class="grid">${pool.map(cardHTML).join('')}</div></details>` : '';
+    html += `<section class="level" aria-label="المستوى ${LV[lv]}"><div class="lvhead"><h2>المستوى ${LV[lv]}</h2><p>${LVNOTE[lv]}</p></div><div class="terms">${lanes}</div>${poolHTML}</section>`;
+  }
+  document.getElementById('levels').innerHTML = html;
+  applySel();
+}
+function applySel() {
+  const root = document.getElementById('levels');
+  const sel = S.sel;
+  root.classList.toggle('has-sel', !!sel);
+  const up = sel ? closure(sel, 'up') : null, down = sel ? closure(sel, 'down') : null;
+  root.querySelectorAll('.card').forEach(el => {
+    const c = el.dataset.c;
+    el.classList.toggle('sel', c === sel);
+    el.classList.toggle('up', !!up && up.has(c));
+    el.classList.toggle('down', !!down && down.has(c));
+    el.querySelector('.pick').setAttribute('aria-pressed', c === sel ? 'true' : 'false');
+  });
+  document.body.classList.toggle('sheet-open', !!sel);
+  renderAside();
+}
+function relBtn(code, cls) {
+  const m = M.get(code);
+  return `<button class="rel ${cls}" data-go="${code}"><span class="code">${code}</span><span>${esc(m.ar)}</span>${S.done.has(code) ? '<i class="ck">✓</i>' : ''}</button>`;
+}
+function termText(c) {
+  const t = n => n === 1 ? 'الأول' : 'الثاني';
+  if (!c.pl) return `مش موزعة على ترم في الجداول (كودها من المستوى ${LV[c.lv]})`;
+  let s = `المستوى ${LV[c.pl[0]]} · الترم ${t(c.pl[1])}`;
+  if (c.alt.length) s += ' وكمان ' + c.alt.map(a => `الترم ${t(a[1])}`).join('، ');
+  return s;
+}
+function renderAside() {
+  const el = document.getElementById('aside');
+  const done = S.done.size;
+  const hours = [...S.done].reduce((n, c) => n + M.get(c).cr, 0);
+  document.getElementById('prog').textContent = done ? `خلصت ${done} مادة · ${hours} ساعة من 138` : 'لسه ما علّمتش أي مادة';
+  if (!S.sel) {
+    el.className = 'aside empty';
+    el.innerHTML = `<h2>اختار مادة</h2>
+      <p class="hint">اضغط على أي كارت وهتشوف هنا اللي لازم تخلصه قبلها واللي بتفتحه بعدها. الدايرة اللي في ركن الكارت بتعلّم إنك خلصتها.</p>
+      <div class="sect"><h4>تقدمك</h4><p class="none">${done ? `خلصت <b>${done}</b> مادة، <b>${hours}</b> ساعة من 138.` : 'لسه ما علّمتش أي مادة.'}</p></div>
+      ${done ? `<button class="ghost${S.confirmReset ? ' warn' : ''}" data-reset>${S.confirmReset ? 'اضغط تاني للتأكيد' : 'امسح كل العلامات'}</button>` : ''}`;
+    return;
+  }
+  const c = M.get(S.sel);
+  const upAll = [...closure(c.c, 'up')].map(x => M.get(x)).sort((a, b) => order(a) - order(b) || a.c.localeCompare(b.c));
+  const downAll = closure(c.c, 'down');
+  const isDone = S.done.has(c.c);
+  const missing = c.pre.filter(p => !S.done.has(p));
+  let state;
+  if (isDone) state = '<p class="state finished">خلصتها ✓</p>';
+  else if (!missing.length) state = '<p class="state ready">تقدر تسجلها من ناحية المتطلبات.</p>';
+  else state = `<p class="state miss">لسه ناقصك: ${missing.map(p => `<span class="code">${p}</span>`).join('، ')}</p>`;
+  const kinds = c.g === 'trk' ? Object.entries(c.tr).map(([t, k]) => `${TR.find(x => x[0] === t)[1]} (${KIND[k]})`).join('، ') : GROUP[c.g];
+  const direct = (kids.get(c.c) || []).map(x => M.get(x)).sort((a, b) => order(a) - order(b));
+  el.className = 'aside';
+  el.innerHTML = `<button class="close" data-close aria-label="قفل التفاصيل">✕</button>
+    <h2>${esc(c.ar)}</h2><p class="eng">${esc(c.en)}</p>
+    <ul class="facts2"><li class="code">${c.c}</li><li>${c.cr ? c.cr + ' ساعات معتمدة'.replace('ساعات', c.cr === 1 ? 'ساعة' : 'ساعات') : 'نجاح/رسوب'}</li><li>${esc(termText(c))}</li></ul>
+    <p class="note">${esc(kinds)}</p>
+    ${state}
+    <button class="bigbtn${isDone ? ' off' : ''}" data-tick="${c.c}">${isDone ? 'شيل علامة الإنجاز' : 'علّم إني خلصتها'}</button>
+    <div class="sect"><h4><b>المتطلب السابق</b></h4>
+      ${c.pre.length ? `<div class="rels">${c.pre.map(p => relBtn(p, 'up')).join('')}</div>` : '<p class="none">مفيش، تقدر تسجلها من أول يوم.</p>'}</div>
+    ${upAll.length > c.pre.length ? `<div class="sect"><h4>السلسلة كاملة قبلها · <b>${upAll.length}</b> مواد</h4><div class="mini">${upAll.map(x => relBtn(x.c, 'up')).join('')}</div></div>` : ''}
+    <div class="sect"><h4><b>بتفتح لك</b>${downAll.size > direct.length ? ` · ${downAll.size} مادة بشكل مباشر وغير مباشر` : ''}</h4>
+      ${direct.length ? `<div class="rels">${direct.map(x => relBtn(x.c, 'down')).join('')}</div>` : '<p class="none">مفيش مواد بتعتمد عليها.</p>'}</div>
+    ${c.n ? `<p class="note">${esc(c.n)}</p>` : ''}`;
+}
+
+function setSel(code, scroll) {
+  S.sel = code;
+  try { if (code) history.replaceState(null, '', '#' + code); else history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+  applySel();
+  if (code && scroll) {
+    const el = document.querySelector(`.card[data-c="${code}"]`);
+    if (el) el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }
+}
+function toggleDone(code) {
+  if (S.done.has(code)) S.done.delete(code); else S.done.add(code);
+  S.confirmReset = false;
+  save();
+  renderLevels();
+}
+
+/* events */
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-pick],[data-tick],[data-go],[data-close],[data-reset],[data-track]');
+  if (!t) return;
+  if (t.dataset.pick) setSel(S.sel === t.dataset.pick ? null : t.dataset.pick);
+  else if (t.dataset.tick) {
+    const c = t.dataset.tick, host = t.closest('#aside') ? '#aside' : '#levels';
+    toggleDone(c);
+    const f = document.querySelector(`${host} [data-tick="${c}"]`); if (f) f.focus({ preventScroll: true });
+  }
+  else if (t.dataset.go) {
+    const c = M.get(t.dataset.go);
+    if (!visible(c)) { S.q = ''; S.avail = false; document.getElementById('q').value = ''; document.getElementById('availOnly').checked = false; if (S.track !== 'all' && c.g === 'trk' && !c.tr[S.track]) S.track = 'all'; renderTracks(); renderLevels(); }
+    setSel(t.dataset.go, true);
+  }
+  else if (t.dataset.close !== undefined) setSel(null);
+  else if (t.dataset.reset !== undefined) {
+    if (S.confirmReset) { S.done.clear(); S.confirmReset = false; save(); renderLevels(); } else { S.confirmReset = true; renderAside(); }
+  }
+  else if (t.dataset.track) { S.track = t.dataset.track; renderTracks(); renderLevels(); }
+});
+document.getElementById('q').addEventListener('input', e => { S.q = e.target.value; renderLevels(); });
+document.getElementById('availOnly').addEventListener('change', e => { S.avail = e.target.checked; renderLevels(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && S.sel) setSel(null); });
+window.addEventListener('hashchange', () => { const h = decodeURIComponent(location.hash.slice(1)); if (M.has(h) && h !== S.sel) setSel(h, true); });
+
+function renderTracks() {
+  document.getElementById('tracks').innerHTML = TR.map(([k, n]) =>
+    `<button class="chip" data-track="${k}" aria-pressed="${S.track === k}">${k !== 'all' ? `<span class="dot" style="background:var(--t-${k})"></span>` : ''}${n}</button>`).join('');
+}
+
+document.getElementById('nCourses').textContent = D.length;
+renderTracks();
+renderLevels();
+{ const h = decodeURIComponent(location.hash.slice(1)); if (M.has(h)) setSel(h, true); }
+</script>
+
+</body>
+</html>
